@@ -20,8 +20,9 @@ extra-source-files:  CHANGELOG.md
 
 executable advent-of-code
   main-is:             Main.hs
-  -- other-modules:
+  other-modules:       Challenge
   -- other-extensions:
-  build-depends:       base >=4.12 && <4.13
+  build-depends:       base >=4.12 && <4.13,
+                       containers
   hs-source-dirs:      src
   default-language:    Haskell2010
