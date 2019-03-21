@@ -30,7 +30,8 @@ run :: Issue -> String -> Integer
 run x = exercise where
   Challenge exercise = challenges ! x
 
+-- Print the solved exercise like (2015, 1, "A"): 232
 print :: Issue -> IO ()
 print x = do
   input <- readFile $ inputPath x
-  putStrLn $ show (run x input)
+  putStrLn $ concat [show x, ": ", show (run x input)]
