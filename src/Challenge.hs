@@ -1,11 +1,14 @@
 module Challenge(
   Issue,
   Challenge(Challenge),
-  challenges
+  challenges,
+  print
 ) where
 
 import qualified Text.Printf as T
 import qualified Data.Map as Map
+import Data.Map ((!))
+import Prelude hiding (print)
 
 -- Issue is the unique identifier for a day of the AoC
 -- e.g. 2015, 22, B means Day 22, part B of the 2015 AoC
@@ -21,3 +24,12 @@ outputPath (year, day, part) = T.printf "data/%04d_%02d_%s_solved" year day part
 -- All the implemented challenges
 challenges :: Map.Map Issue Challenge
 challenges = Map.fromList []
+
+run :: Issue -> String -> Integer
+run x = exercise where
+  Challenge exercise = challenges ! x
+
+print :: Issue -> IO ()
+print x = do
+  input <- readFile $ inputPath x
+  putStrLn $ show (run x input)
