@@ -19,7 +19,9 @@ outputPath (year, day, part) = T.printf "data/%04d_%02d_%s_solved" year day part
 
 -- All the implemented challenges
 challenges :: Map.Map Issue Challenge
-challenges = Map.fromList []
+challenges = Map.fromList $ concat [
+  AoC2015.challenges
+  ]
 
 run :: Issue -> String -> Integer
 run x = exercise where
