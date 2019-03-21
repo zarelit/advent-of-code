@@ -20,7 +20,7 @@ extra-source-files:  CHANGELOG.md
 
 executable advent-of-code
   main-is:             Main.hs
-  other-modules:       Challenge
+  other-modules:       Challenge, ChallengeLauncher
   -- other-extensions:
   build-depends:       base >=4.12 && <4.13,
                        containers
