@@ -1,5 +1,5 @@
 module ChallengeLauncher(
-  challenges,
+  issues,
   print
 ) where
 
@@ -22,6 +22,9 @@ challenges :: Map.Map Issue Challenge
 challenges = Map.fromList $ concat [
   AoC2015.challenges
   ]
+
+issues :: [Issue]
+issues = Map.keys challenges
 
 run :: Issue -> String -> Integer
 run x = exercise where

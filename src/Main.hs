@@ -1,4 +1,8 @@
 module Main where
 
+import qualified ChallengeLauncher as CL
+
 main :: IO ()
-main = putStrLn "Hello, Advent Of Code!"
+main = do
+  putStrLn "Hello, Advent Of Code!"
+  mapM_ CL.print CL.issues
