@@ -5,4 +5,4 @@ import qualified ChallengeLauncher as CL
 main :: IO ()
 main = do
   putStrLn "Hello, Advent Of Code!"
-  mapM_ CL.print CL.issues
+  mapM_ CL.solveAndPrint CL.issues

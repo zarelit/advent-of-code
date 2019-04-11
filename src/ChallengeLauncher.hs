@@ -1,12 +1,14 @@
 module ChallengeLauncher(
   issues,
-  print
+  print,
+  solveAndPrint
 ) where
 
 import qualified Text.Printf as T
 import qualified Data.Map as Map
 import Data.Map ((!))
 import Prelude hiding (print)
+import System.Directory (doesFileExist)
 import Challenge
 
 import qualified AoC2015
@@ -35,3 +37,18 @@ print :: Issue -> IO ()
 print x = do
   input <- readFile $ inputPath x
   putStrLn $ concat [show x, ": ", show (run x input)]
+
+printCachedSolution :: Issue -> IO ()
+printCachedSolution x = do
+  solution <- readFile (outputPath x)
+  putStr $ concat [show x, ": ", solution]
+
+solveAndPrint :: Issue -> IO ()
+solveAndPrint x = do
+  let outPath = outputPath x
+  outputExists <- doesFileExist outPath
+  if outputExists
+  then
+    printCachedSolution x
+  else
+    print x
