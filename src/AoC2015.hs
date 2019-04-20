@@ -5,6 +5,12 @@ module AoC2015(
 import Data.Maybe (fromJust)
 import Data.List (elemIndex, sort, nub)
 import Data.Char (isSpace)
+import qualified Data.ByteString.Lazy.Char8 as Char8
+import qualified Data.ByteString.Lazy as ByteString
+import qualified Data.ByteString as ByteStringStrict
+import qualified Crypto.Hash.MD5 as MD5
+import qualified Data.ByteString.Base16 as B16
+import GHC.Int (Int64)
 import Challenge
 
 year = 2015
@@ -16,7 +22,9 @@ challenges = [
   ((year, 2, "A"), Challenge wrappingArea),
   ((year, 2, "B"), Challenge ribbonLength),
   ((year, 3, "A"), Challenge uniqueVisitedHouses),
-  ((year, 3, "B"), Challenge uniqueVisitedHouses')
+  ((year, 3, "B"), Challenge uniqueVisitedHouses'),
+  ((year, 4, "A"), Challenge adventCoinFive),
+  ((year, 4, "B"), Challenge adventCoinSix)
   ]
 
 {-
@@ -261,4 +269,45 @@ uniqueVisitedHouses' input = toInteger.length.nub $ allVisited
     couples = movesCouples.parseDay03.strip $ input
     santa = map fst couples
     robot = map snd couples
-    strip = takeWhile (\x->not (isSpace x))
+
+strip :: String -> String
+strip = takeWhile (\x->not (isSpace x))
+
+{-
+--- Day 4: The Ideal Stocking Stuffer ---
+
+Santa needs help mining some AdventCoins (very similar to bitcoins) to use as
+gifts for all the economically forward-thinking little girls and boys.
+
+To do this, he needs to find MD5 hashes which, in hexadecimal, start with at
+least five zeroes. The input to the MD5 hash is some secret key (your puzzle
+input, given below) followed by a number in decimal. To mine AdventCoins, you
+must find Santa the lowest positive number (no leading zeroes: 1, 2, 3, ...)
+that produces such a hash.
+
+For example:
+Integer
+    If your secret key is abcdef, the answer is 609043, because the MD5 hash of
+    abcdef609043 starts with five zeroes (000001dbbfa...), and it is the lowest
+    such number to do so. If your secret key is pqrstuv, the lowest number it
+    combines with to make an MD5 hash starting with five zeroes is 1048970; that
+    is, the MD5 hash of pqrstuv1048970 looks like 000006136ef....
+-}
+
+adventCoinFive :: String -> Integer
+adventCoinFive = (flip mineAdventCoin) 5
+
+adventCoinSix :: String -> Integer
+adventCoinSix = (flip mineAdventCoin) 6
+
+mineAdventCoin :: String -> Int64 -> Integer
+mineAdventCoin prefix threshold = let
+  -- the initial part of the hash that must match
+  discover = ByteString.toStrict $ ByteString.take threshold $ Char8.repeat '0'
+  counter = [1..]
+  guesses = map (\x -> (strip prefix) ++ show x) counter
+  packedGuesses = map (Char8.pack) guesses
+  strictHash = (MD5.hash).(ByteString.toStrict)
+  outcomes = map ((B16.encode).strictHash) packedGuesses
+  hasNotPrefix = not.(ByteStringStrict.isPrefixOf discover)
+  in (toInteger.length $ takeWhile hasNotPrefix outcomes) + 1
