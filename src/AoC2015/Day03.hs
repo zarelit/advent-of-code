@@ -61,7 +61,7 @@ moveSquareSpecular :: GridPosition -> GridMove -> GridPosition
 moveSquareSpecular p m = moveSquare p (mirrorMove m)
 
 traceSquarePath :: [GridMove] -> [GridPosition]
-traceSquarePath moves = scanl moveSquare squareOrigin moves
+traceSquarePath = scanl moveSquare squareOrigin
 
 parseDay03 :: String -> [GridMove]
 parseDay03 = map asciiSquareMove
@@ -97,7 +97,7 @@ movesCouples _ = error "Odd number of moves"
 uniqueVisitedHouses' input = toInteger.length.nub $ allVisited
   where
     allVisited = visited santa ++ visited robot
-    visited xs = traceSquarePath xs
+    visited = traceSquarePath
     couples = movesCouples.parseDay03.strip $ input
     santa = map fst couples
     robot = map snd couples

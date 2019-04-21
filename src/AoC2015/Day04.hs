@@ -34,18 +34,18 @@ Integer
 partA = Challenge adventCoinFive
 
 adventCoinFive :: String -> Integer
-adventCoinFive = (flip mineAdventCoin) 5
+adventCoinFive = flip mineAdventCoin 5
 
 mineAdventCoin :: String -> Int64 -> Integer
 mineAdventCoin prefix threshold = let
   -- the initial part of the hash that must match
   discover = ByteString.toStrict $ ByteString.take threshold $ Char8.repeat '0'
   counter = [1..]
-  guesses = map (\x -> (strip prefix) ++ show x) counter
-  packedGuesses = map (Char8.pack) guesses
-  strictHash = (MD5.hash).(ByteString.toStrict)
-  outcomes = map ((B16.encode).strictHash) packedGuesses
-  hasNotPrefix = not.(ByteStringStrict.isPrefixOf discover)
+  guesses = map (\x -> strip prefix ++ show x) counter
+  packedGuesses = map Char8.pack guesses
+  strictHash = MD5.hash . ByteString.toStrict
+  outcomes = map (B16.encode . strictHash) packedGuesses
+  hasNotPrefix = not . ByteStringStrict.isPrefixOf discover
   in (toInteger.length $ takeWhile hasNotPrefix outcomes) + 1
 
 {-
@@ -56,4 +56,4 @@ Now find one that starts with six zeroes.
 partB = Challenge adventCoinSix
 
 adventCoinSix :: String -> Integer
-adventCoinSix = (flip mineAdventCoin) 6
+adventCoinSix = flip mineAdventCoin 6
