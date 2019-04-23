@@ -39,3 +39,14 @@ executable advent-of-code
   GHC-options:         -Wno-missing-home-modules
   hs-source-dirs:      src
   default-language:    Haskell2010
+
+test-suite examples
+  type: exitcode-stdio-1.0
+  hs-source-dirs: test
+  main-is: ExamplesSpec.hs
+  build-depends: base >=4.12 && <4.13,
+                 hspec >= 1.3,
+                 advent-of-code == 0.1.0.0
+  GHC-options:   -Wno-missing-home-modules
+  default-language: Haskell2010
+  build-tool-depends: hspec-discover:hspec-discover == 2.*

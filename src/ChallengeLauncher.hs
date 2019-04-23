@@ -1,7 +1,8 @@
 module ChallengeLauncher(
   issues,
   print,
-  solveAndPrint
+  solveAndPrint,
+  run
 ) where
 
 import qualified Text.Printf as T
