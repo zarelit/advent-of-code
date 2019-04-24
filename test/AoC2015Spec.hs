@@ -55,3 +55,19 @@ spec =
         let test = run (year, day, "A")
         test "abcdef" `shouldBe` 609043
         test "pqrstuv" `shouldBe` 1048970
+
+    context "Day 05" $ do
+      let day = 5
+      it "Part A" $ do
+        let test = run (year, day, "A")
+        test "ugknbfddgicrmopn" `shouldBe` 1
+        test "aaa" `shouldBe` 1
+        test "jchzalrnumimnmhp" `shouldBe` 0
+        test "haegwjzuvuyypxyu" `shouldBe` 0
+        test "dvszwmarrgswjxmb" `shouldBe` 0
+      it "Part B" $ do
+        let test = run (year, day, "B")
+        test "qjhvhtzxzqqjkmpb" `shouldBe` 1
+        test "xxyxx" `shouldBe` 1
+        test "uurcxstgmygtbstg" `shouldBe` 0
+        test "ieodomkazucvgmuy" `shouldBe` 0
