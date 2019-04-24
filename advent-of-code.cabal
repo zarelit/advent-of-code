@@ -25,7 +25,8 @@ library
   build-depends:       base >=4.12 && <4.13,
                        containers,
                        directory,
-                       cryptohash-md5, base16-bytestring, bytestring
+                       cryptohash-md5, base16-bytestring, bytestring,
+                       regex-pcre
   GHC-options:         -Wno-missing-home-modules
   default-language:    Haskell2010
 
@@ -35,7 +36,8 @@ executable advent-of-code
                        advent-of-code == 0.1.0.0,
                        containers,
                        directory,
-                       cryptohash-md5, base16-bytestring, bytestring
+                       cryptohash-md5, base16-bytestring, bytestring,
+                       regex-pcre
   GHC-options:         -Wno-missing-home-modules
   hs-source-dirs:      src
   default-language:    Haskell2010
@@ -48,7 +50,9 @@ test-suite examples
                  hspec >= 1.3,
                  containers,
                  directory,
-                 cryptohash-md5, base16-bytestring, bytestring
+                 cryptohash-md5, base16-bytestring, bytestring,
+                 regex-pcre
+
   default-language: Haskell2010
   other-modules:     Challenge, ChallengeLauncher,
                      AoC2015
