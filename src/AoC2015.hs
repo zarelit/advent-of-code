@@ -8,6 +8,7 @@ import qualified AoC2015.Day02
 import qualified AoC2015.Day03
 import qualified AoC2015.Day04
 import qualified AoC2015.Day05
+import qualified AoC2015.Day06
 
 year = 2015
 
@@ -22,5 +23,7 @@ challenges = [
   ((year, 4, "A"), AoC2015.Day04.partA),
   ((year, 4, "B"), AoC2015.Day04.partB),
   ((year, 5, "A"), AoC2015.Day05.partA),
-  ((year, 5, "B"), AoC2015.Day05.partB)
+  ((year, 5, "B"), AoC2015.Day05.partB),
+  ((year, 6, "A"), AoC2015.Day06.partA),
+  ((year, 6, "B"), AoC2015.Day06.partB)
   ]

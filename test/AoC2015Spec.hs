@@ -71,3 +71,18 @@ spec =
         test "xxyxx" `shouldBe` 1
         test "uurcxstgmygtbstg" `shouldBe` 0
         test "ieodomkazucvgmuy" `shouldBe` 0
+
+    context "Day 06" $ do
+      let day = 6
+      it "Part A" $ do
+        let test = run (year, day, "A")
+        test "turn on 0,0 through 999,999" `shouldBe` 1000000
+        test "toggle 0,0 through 999,0" `shouldBe` 1000
+        test (unlines [
+          "turn on 0,0 through 1,0",
+          "toggle 0,0 through 999,0"
+          ]) `shouldBe` 999
+        test (unlines [
+          "turn on 0,0 through 999,999",
+          "turn off 499,499 through 500,500"
+          ]) `shouldBe` 999996
