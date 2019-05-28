@@ -6,7 +6,7 @@ let
 
   f = { mkDerivation, base, base16-bytestring, bytestring
       , containers, cryptohash-md5, directory, hspec, hspec-discover
-      , regex-pcre, stdenv
+      , matrix, regex-pcre, stdenv
       }:
       mkDerivation {
         pname = "advent-of-code";
@@ -16,15 +16,15 @@ let
         isExecutable = true;
         libraryHaskellDepends = [
           base base16-bytestring bytestring containers cryptohash-md5
-          directory regex-pcre
+          directory matrix regex-pcre
         ];
         executableHaskellDepends = [
           base base16-bytestring bytestring containers cryptohash-md5
-          directory regex-pcre
+          directory matrix regex-pcre
         ];
         testHaskellDepends = [
           base base16-bytestring bytestring containers cryptohash-md5
-          directory hspec regex-pcre
+          directory hspec matrix regex-pcre
         ];
         testToolDepends = [ hspec-discover ];
         homepage = "https://github.com/zarelit/advent-of-code";

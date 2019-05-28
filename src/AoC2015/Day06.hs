@@ -1,7 +1,7 @@
 -- module AoC2015.Day06 (
 --   partA, partB
 -- )
-module AoC2015.Day06 (partA, partB)
+module AoC2015.Day06-- (partA, partB)
 where
 import Challenge
 
@@ -10,6 +10,7 @@ import Data.Char (isDigit, isAlpha)
 import Control.Applicative ((<|>))
 import Data.List (find)
 import Data.Maybe (mapMaybe)
+import Data.Matrix (Matrix, matrix, toList)
 
 {-
 --- Day 6: Probably a Fire Hazard ---
@@ -48,6 +49,8 @@ data Range = Range Start End deriving Show
 type Start = Point
 type End = Start
 data Point = Point Int Int deriving Show
+
+---- Parsing of the instructions
 
 instruction :: ReadP Instruction
 instruction = do
@@ -95,7 +98,50 @@ parseInstruction s = let
 parse :: String -> [Instruction]
 parse = mapMaybe parseInstruction . lines
 
+-- Actual calculation on the matrix
 
-partA = undefined
+gridWidth, gridHeight :: Int
+gridWidth = 1000
+gridHeight = 1000
+
+initialGrid :: Togglable a => Matrix a
+initialGrid = matrix gridWidth gridHeight (const initialState)
+
+class Togglable a where
+  initialState :: a
+  apply :: Op -> a -> a
+
+instance Togglable Bool where
+  initialState = False
+  apply On = const True
+  apply Off = const False
+  apply Toggle = not
+
+-- Does the Range of the instruction apply to this matrix coordinate?
+(<?) :: Range -> (Int, Int) -> Bool
+(<?) (Range start end) (x, y) = let
+  (Point x1 y1) = start
+  (Point x2 y2) = end
+  (mx, my) = (x-1, y-1) -- translate from matrix coords (they start from 1!)
+  in and [
+    mx >= min x1 x2, mx <= max x1 x2,
+    my >= min y1 y2, my <= max y1 y2
+  ]
+
+stepGenerator :: Togglable a => Instruction -> Matrix (a -> a)
+stepGenerator (Instruction op r) = let
+  g coord = if r <? coord then apply op else id
+  in matrix gridWidth gridHeight g
+
+
+finalGrid :: Togglable a => Matrix a -> [Instruction] -> Matrix a
+finalGrid z xs = foldl f z (steps xs) where
+  f = flip (<*>)
+  steps = map stepGenerator
+
+countOn :: Matrix Bool -> Integer
+countOn = toInteger.foldr (\x -> if x then (+1) else id) 0
+
+partA = Challenge $ countOn.finalGrid initialGrid.parse
 
 partB = undefined

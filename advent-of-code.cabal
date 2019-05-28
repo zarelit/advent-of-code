@@ -26,7 +26,8 @@ library
                        containers,
                        directory,
                        cryptohash-md5, base16-bytestring, bytestring,
-                       regex-pcre
+                       regex-pcre,
+                       matrix
   GHC-options:         -Wno-missing-home-modules
   default-language:    Haskell2010
 
@@ -37,7 +38,8 @@ executable advent-of-code
                        containers,
                        directory,
                        cryptohash-md5, base16-bytestring, bytestring,
-                       regex-pcre
+                       regex-pcre,
+                       matrix
   GHC-options:         -Wno-missing-home-modules
   hs-source-dirs:      src
   default-language:    Haskell2010
@@ -51,7 +53,8 @@ test-suite examples
                  containers,
                  directory,
                  cryptohash-md5, base16-bytestring, bytestring,
-                 regex-pcre
+                 regex-pcre,
+                 matrix
 
   default-language: Haskell2010
   other-modules:     Challenge, ChallengeLauncher,
