@@ -44,7 +44,7 @@ After following the instructions, how many lights are lit?
 -}
 
 data Instruction = Instruction Op Range deriving Show
-data Op = Off | On | Toggle deriving Show
+data Op = Off | On | Toggle | Nop deriving Show
 data Range = Range Start End deriving Show
 type Start = Point
 type End = Start
@@ -107,6 +107,18 @@ gridHeight = 1000
 initialGrid :: Togglable a => Matrix a
 initialGrid = matrix gridWidth gridHeight (const initialState)
 
+instance Monoid Op where
+  mempty = Nop
+
+instance Semigroup Op where
+  _ <> On = On
+  _ <> Off = Off
+  x <> Nop = x
+  Off <> Toggle = On
+  On <> Toggle = Off
+  Toggle <> Toggle = Nop
+  Nop <> Toggle = Toggle
+
 class Togglable a where
   initialState :: a
   apply :: Op -> a -> a
@@ -116,6 +128,7 @@ instance Togglable Bool where
   apply On = const True
   apply Off = const False
   apply Toggle = not
+  apply Nop = id
 
 -- Does the Range of the instruction apply to this matrix coordinate?
 (<?) :: Range -> (Int, Int) -> Bool
@@ -128,20 +141,20 @@ instance Togglable Bool where
     my >= min y1 y2, my <= max y1 y2
   ]
 
-stepGenerator :: Togglable a => Instruction -> Matrix (a -> a)
+stepGenerator :: Instruction -> Matrix Op
 stepGenerator (Instruction op r) = let
-  g coord = if r <? coord then apply op else id
+  g coord = if r <? coord then op else Nop
   in matrix gridWidth gridHeight g
 
+allStepsMatrix :: [Instruction] -> Matrix Op
+allStepsMatrix = mconcat.map stepGenerator
 
-finalGrid :: Togglable a => Matrix a -> [Instruction] -> Matrix a
-finalGrid z xs = foldl f z (steps xs) where
-  f = flip (<*>)
-  steps = map stepGenerator
+finalGrid :: Togglable a => Matrix a -> Matrix Op -> Matrix a
+finalGrid z op = fmap apply op <*> z
 
 countOn :: Matrix Bool -> Integer
 countOn = toInteger.foldr (\x -> if x then (+1) else id) 0
 
-partA = Challenge $ countOn.finalGrid initialGrid.parse
+partA = Challenge $ countOn.finalGrid initialGrid.allStepsMatrix.parse
 
 partB = undefined
