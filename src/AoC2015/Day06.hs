@@ -130,6 +130,9 @@ instance Togglable Bool where
   apply Toggle = not
   apply Nop = id
 
+initialStep :: Matrix Op
+initialStep = matrix gridWidth gridHeight (const Nop)
+
 -- Does the Range of the instruction apply to this matrix coordinate?
 (<?) :: Range -> (Int, Int) -> Bool
 (<?) (Range start end) (x, y) = let
@@ -147,7 +150,7 @@ stepGenerator (Instruction op r) = let
   in matrix gridWidth gridHeight g
 
 allStepsMatrix :: [Instruction] -> Matrix Op
-allStepsMatrix = foldl (elementwiseUnsafe (<>)) mempty . map stepGenerator
+allStepsMatrix = foldl (elementwiseUnsafe (<>)) initialStep . map stepGenerator
 
 finalGrid :: Togglable a => Matrix a -> Matrix Op -> Matrix a
 finalGrid z op = fmap apply op <*> z
