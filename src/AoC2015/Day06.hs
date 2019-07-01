@@ -104,8 +104,8 @@ gridWidth, gridHeight :: Int
 gridWidth = 1000
 gridHeight = 1000
 
-initialGrid :: Togglable a => Matrix a
-initialGrid = matrix gridWidth gridHeight (const initialState)
+initialGrid :: Matrix Bool
+initialGrid = matrix gridWidth gridHeight (const False)
 
 instance Monoid Op where
   mempty = Nop
@@ -119,19 +119,11 @@ instance Semigroup Op where
   Toggle <> Toggle = Nop
   Nop <> Toggle = Toggle
 
-class Togglable a where
-  initialState :: a
-  apply :: Op -> a -> a
-
-instance Togglable Bool where
-  initialState = False
-  apply On = const True
-  apply Off = const False
-  apply Toggle = not
-  apply Nop = id
-
-initialStep :: Matrix Op
-initialStep = matrix gridWidth gridHeight (const Nop)
+apply :: Op -> Bool -> Bool
+apply On = const True
+apply Off = const False
+apply Toggle = not
+apply Nop = id
 
 -- Does the Range of the instruction apply to this matrix coordinate?
 (<?) :: Range -> (Int, Int) -> Bool
@@ -150,9 +142,9 @@ stepGenerator (Instruction op r) = let
   in matrix gridWidth gridHeight g
 
 allStepsMatrix :: [Instruction] -> Matrix Op
-allStepsMatrix = foldl (elementwiseUnsafe (<>)) initialStep . map stepGenerator
+allStepsMatrix = foldl1 (elementwiseUnsafe (<>)) . map stepGenerator
 
-finalGrid :: Togglable a => Matrix a -> Matrix Op -> Matrix a
+finalGrid :: Matrix Bool -> Matrix Op -> Matrix Bool
 finalGrid z op = fmap apply op <*> z
 
 countOn :: Matrix Bool -> Integer
