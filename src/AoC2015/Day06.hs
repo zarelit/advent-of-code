@@ -10,7 +10,7 @@ import Data.Char (isDigit, isAlpha)
 import Control.Applicative ((<|>))
 import Data.List (find)
 import Data.Maybe (mapMaybe)
-import Data.Matrix (Matrix, matrix, toList)
+import Data.Matrix (Matrix, matrix, elementwiseUnsafe)
 
 {-
 --- Day 6: Probably a Fire Hazard ---
@@ -147,7 +147,7 @@ stepGenerator (Instruction op r) = let
   in matrix gridWidth gridHeight g
 
 allStepsMatrix :: [Instruction] -> Matrix Op
-allStepsMatrix = mconcat.map stepGenerator
+allStepsMatrix = foldl (elementwiseUnsafe (<>)) mempty . map stepGenerator
 
 finalGrid :: Togglable a => Matrix a -> Matrix Op -> Matrix a
 finalGrid z op = fmap apply op <*> z
