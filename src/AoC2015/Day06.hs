@@ -11,6 +11,7 @@ import Control.Applicative ((<|>))
 import Data.List (find)
 import Data.Maybe (mapMaybe)
 import Data.Matrix (Matrix, matrix, elementwiseUnsafe)
+import Control.DeepSeq(NFData, rnf, force)
 
 {-
 --- Day 6: Probably a Fire Hazard ---
@@ -119,6 +120,9 @@ instance Semigroup Op where
   Toggle <> Toggle = Nop
   Nop <> Toggle = Toggle
 
+instance NFData Op where
+  rnf _ = ()
+
 apply :: Op -> Bool -> Bool
 apply On = const True
 apply Off = const False
@@ -142,7 +146,7 @@ stepGenerator (Instruction op r) = let
   in matrix gridWidth gridHeight g
 
 allStepsMatrix :: [Instruction] -> Matrix Op
-allStepsMatrix = foldl1 (elementwiseUnsafe (<>)) . map stepGenerator
+allStepsMatrix = foldl1 (elementwiseUnsafe (\x y -> force (x <> y))) . map stepGenerator
 
 finalGrid :: Matrix Bool -> Matrix Op -> Matrix Bool
 finalGrid z op = fmap apply op <*> z
