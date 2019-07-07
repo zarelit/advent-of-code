@@ -10,8 +10,9 @@ import Data.Char (isDigit, isAlpha)
 import Control.Applicative ((<|>))
 import Data.List (find)
 import Data.Maybe (mapMaybe)
-import Data.Matrix (Matrix, matrix, elementwiseUnsafe)
+import Data.Matrix (Matrix, matrix, elementwiseUnsafe, fromList)
 import Control.DeepSeq(NFData, rnf, force)
+import Data.Foldable (foldl')
 
 {-
 --- Day 6: Probably a Fire Hazard ---
@@ -105,8 +106,11 @@ gridWidth, gridHeight :: Int
 gridWidth = 1000
 gridHeight = 1000
 
+constGrid :: a -> Matrix a
+constGrid = fromList gridWidth gridHeight . replicate (gridWidth*gridHeight)
+
 initialGrid :: Matrix Bool
-initialGrid = matrix gridWidth gridHeight (const False)
+initialGrid = constGrid False
 
 instance Monoid Op where
   mempty = Nop
@@ -146,7 +150,13 @@ stepGenerator (Instruction op r) = let
   in matrix gridWidth gridHeight g
 
 allStepsMatrix :: [Instruction] -> Matrix Op
-allStepsMatrix = foldl1 (elementwiseUnsafe (\x y -> force (x <> y))) . map stepGenerator
+allStepsMatrix = foldl' concatOp emptyOpGrid . map stepGenerator
+
+concatOp :: Matrix Op -> Matrix Op -> Matrix Op
+concatOp = force (elementwiseUnsafe (\a b -> force (a<>b)))
+
+emptyOpGrid :: Matrix Op
+emptyOpGrid = constGrid Nop
 
 finalGrid :: Matrix Bool -> Matrix Op -> Matrix Bool
 finalGrid z op = elementwiseUnsafe apply op z
