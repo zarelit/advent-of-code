@@ -149,7 +149,7 @@ allStepsMatrix :: [Instruction] -> Matrix Op
 allStepsMatrix = foldl1 (elementwiseUnsafe (\x y -> force (x <> y))) . map stepGenerator
 
 finalGrid :: Matrix Bool -> Matrix Op -> Matrix Bool
-finalGrid z op = fmap apply op <*> z
+finalGrid z op = elementwiseUnsafe apply op z
 
 countOn :: Matrix Bool -> Integer
 countOn = toInteger.foldr (\x -> if x then (+1) else id) 0
