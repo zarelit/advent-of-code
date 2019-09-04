@@ -81,7 +81,7 @@ spec =
         test (unlines [
           "turn on 0,0 through 1,0",
           "toggle 0,0 through 999,0"
-          ]) `shouldBe` 999
+          ]) `shouldBe` 998
         test (unlines [
           "turn on 0,0 through 999,999",
           "turn off 499,499 through 500,500"
