@@ -1,73 +1,41 @@
 module AoC2015.Day06.Calculate (
-countOn, runInstructions
+runChallenge
 ) where
 
 import AoC2015.Day06.Types
-import Data.Matrix (Matrix, matrix, elementwiseUnsafe, fromList)
-import Control.DeepSeq(NFData, rnf, force)
-import Data.Foldable (foldl')
+import Numeric.Matrix
 
-gridWidth, gridHeight :: Int
-gridWidth = 1000
-gridHeight = 1000
+-- as per the exercise definition
+width = 1000
+height = 1000
 
-constGrid :: a -> Matrix a
-constGrid = fromList gridWidth gridHeight . replicate (gridWidth*gridHeight)
+runChallenge :: [Instruction] -> Integer
+runChallenge xs = (toInteger.Numeric.Matrix.sum) (endMatrix xs)
 
-initialGrid :: Matrix Bool
-initialGrid = constGrid False
+startMatrix :: Matrix Int
+startMatrix = matrix (width, height) (const 0)
 
-instance Monoid Op where
-  mempty = Nop
+endMatrix :: [Instruction] -> Matrix Int
+endMatrix = foldl step startMatrix
 
-instance Semigroup Op where
-  _ <> On = On
-  _ <> Off = Off
-  x <> Nop = x
-  Off <> Toggle = On
-  On <> Toggle = Off
-  Toggle <> Toggle = Nop
-  Nop <> Toggle = Toggle
+contains :: Range -> (Int, Int) -> Bool
+contains (Range start end) p = let
+  Point x1 y1 = start
+  Point x2 y2 = end
+  (xp, yp) = p
+  (mxp, myp) = (xp-1, yp-1)
+  in
+    mxp <= max x1 x2 && mxp >= min x1 x2 &&
+    myp <= max y1 y2 && myp >= min y1 y2
 
-instance NFData Op where
-  rnf _ = ()
+step :: Matrix Int -> Instruction -> Matrix Int
+step z i = mapWithIndex (apply i) z
 
-apply :: Op -> Bool -> Bool
-apply On = const True
-apply Off = const False
-apply Toggle = not
-apply Nop = id
+-- apply the instruction on a single item in the matrix
+apply :: Instruction -> (Int, Int) -> Int -> Int
+apply (Instruction On r) p x = applyIfInRange r p (const 1) x
+apply (Instruction Off r) p x = applyIfInRange r p (const 0) x
+apply (Instruction Toggle r) p x = applyIfInRange r p (\v -> abs (v-1)) x
 
--- Does the Range of the instruction apply to this matrix coordinate?
-(<?) :: Range -> (Int, Int) -> Bool
-(<?) (Range start end) (x, y) = let
-  (Point x1 y1) = start
-  (Point x2 y2) = end
-  (mx, my) = (x-1, y-1) -- translate from matrix coords (they start from 1!)
-  in and [
-    mx >= min x1 x2, mx <= max x1 x2,
-    my >= min y1 y2, my <= max y1 y2
-  ]
-
-stepGenerator :: Instruction -> Matrix Op
-stepGenerator (Instruction op r) = let
-  g coord = if r <? coord then op else Nop
-  in matrix gridWidth gridHeight g
-
-allStepsMatrix :: [Instruction] -> Matrix Op
-allStepsMatrix = foldl' concatOp emptyOpGrid . map stepGenerator
-
-concatOp :: Matrix Op -> Matrix Op -> Matrix Op
-concatOp = force (elementwiseUnsafe (\a b -> force (a<>b)))
-
-emptyOpGrid :: Matrix Op
-emptyOpGrid = constGrid Nop
-
-finalGrid :: Matrix Bool -> Matrix Op -> Matrix Bool
-finalGrid z op = elementwiseUnsafe apply op z
-
-countOn :: Matrix Bool -> Integer
-countOn = toInteger.foldr (\x -> if x then (+1) else id) 0
-
-runInstructions :: [Instruction] -> Matrix Bool
-runInstructions = finalGrid initialGrid.allStepsMatrix
+applyIfInRange :: Range -> (Int, Int) -> (Int -> Int) -> Int -> Int
+applyIfInRange range point fun val = if range `contains` point then fun val else val

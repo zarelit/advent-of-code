@@ -27,7 +27,16 @@ library
                        directory,
                        cryptohash-md5, base16-bytestring, bytestring,
                        regex-pcre,
-                       matrix, deepseq
+                       bed-and-breakfast
+  other-modules:     AoC2015.Day01,
+                     AoC2015.Day02,
+                     AoC2015.Day03,
+                     AoC2015.Day04,
+                     AoC2015.Day05,
+                     AoC2015.Day06,
+                     AoC2015.Day06.Calculate,
+                     AoC2015.Day06.Parse,
+                     AoC2015.Day06.Types
   default-language:    Haskell2010
 
 executable advent-of-code
@@ -38,7 +47,18 @@ executable advent-of-code
                        directory,
                        cryptohash-md5, base16-bytestring, bytestring,
                        regex-pcre,
-                       matrix, deepseq
+                       bed-and-breakfast
+  other-modules:     Challenge, ChallengeLauncher,
+                     AoC2015, AoC2015,
+                     AoC2015.Day01,
+                     AoC2015.Day02,
+                     AoC2015.Day03,
+                     AoC2015.Day04,
+                     AoC2015.Day05,
+                     AoC2015.Day06,
+                     AoC2015.Day06.Calculate,
+                     AoC2015.Day06.Parse,
+                     AoC2015.Day06.Types
   hs-source-dirs:      src
   default-language:    Haskell2010
 
@@ -52,9 +72,19 @@ test-suite examples
                  directory,
                  cryptohash-md5, base16-bytestring, bytestring,
                  regex-pcre,
-                 matrix, deepseq
+                 bed-and-breakfast
 
   default-language: Haskell2010
-  other-modules:     Challenge, ChallengeLauncher,
-                     AoC2015
+  other-modules:     Challenge, ChallengeLauncher, AoC2015Spec,
+                     AoC2015,
+                     AoC2015.Day01,
+                     AoC2015.Day02,
+                     AoC2015.Day03,
+                     AoC2015.Day04,
+                     AoC2015.Day05,
+                     AoC2015.Day06,
+                     AoC2015.Day06.Calculate,
+                     AoC2015.Day06.Parse,
+                     AoC2015.Day06.Types,
+                     AoC2015Day06CalcSpec
   build-tool-depends: hspec-discover:hspec-discover == 2.*
