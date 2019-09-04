@@ -4,9 +4,9 @@ let
 
   inherit (nixpkgs) pkgs;
 
-  f = { mkDerivation, base, base16-bytestring, bytestring
-      , containers, cryptohash-md5, directory, hspec, hspec-discover
-      , matrix, regex-pcre, stdenv
+  f = { mkDerivation, base, base16-bytestring, bed-and-breakfast
+      , bytestring, containers, cryptohash-md5, directory, hspec
+      , hspec-discover, regex-pcre, stdenv
       }:
       mkDerivation {
         pname = "advent-of-code";
@@ -15,16 +15,16 @@ let
         isLibrary = true;
         isExecutable = true;
         libraryHaskellDepends = [
-          base base16-bytestring bytestring containers cryptohash-md5
-          directory matrix regex-pcre
+          base base16-bytestring bed-and-breakfast bytestring containers
+          cryptohash-md5 directory regex-pcre
         ];
         executableHaskellDepends = [
-          base base16-bytestring bytestring containers cryptohash-md5
-          directory matrix regex-pcre
+          base base16-bytestring bed-and-breakfast bytestring containers
+          cryptohash-md5 directory regex-pcre
         ];
         testHaskellDepends = [
-          base base16-bytestring bytestring containers cryptohash-md5
-          directory hspec matrix regex-pcre
+          base base16-bytestring bed-and-breakfast bytestring containers
+          cryptohash-md5 directory hspec regex-pcre
         ];
         testToolDepends = [ hspec-discover ];
         homepage = "https://github.com/zarelit/advent-of-code";

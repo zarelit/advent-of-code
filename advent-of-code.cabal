@@ -85,6 +85,5 @@ test-suite examples
                      AoC2015.Day06,
                      AoC2015.Day06.Calculate,
                      AoC2015.Day06.Parse,
-                     AoC2015.Day06.Types,
-                     AoC2015Day06CalcSpec
+                     AoC2015.Day06.Types
   build-tool-depends: hspec-discover:hspec-discover == 2.*
