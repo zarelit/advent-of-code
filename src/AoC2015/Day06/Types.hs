@@ -6,3 +6,4 @@ data Range = Range Start End deriving Show
 type Start = Point
 type End = Start
 data Point = Point Int Int deriving (Eq, Show)
+type OpFun = Op -> Int -> Int

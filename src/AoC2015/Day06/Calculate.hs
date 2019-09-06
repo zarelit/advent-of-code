@@ -1,5 +1,5 @@
 module AoC2015.Day06.Calculate (
-runChallenge
+runChallengeA
 ) where
 
 import AoC2015.Day06.Types
@@ -9,14 +9,20 @@ import Numeric.Matrix
 width = 1000
 height = 1000
 
-runChallenge :: [Instruction] -> Integer
-runChallenge xs = (toInteger.Numeric.Matrix.sum) (endMatrix xs)
+runChallengeA :: [Instruction] -> Integer
+runChallengeA = runChallenge opA
+
+-- runChallengeB :: [Instruction] -> Integer
+-- runChallengeB = runChallenge lookupB
+
+runChallenge :: OpFun -> [Instruction] -> Integer
+runChallenge opFun xs = (toInteger.Numeric.Matrix.sum) (endMatrix opFun xs)
 
 startMatrix :: Matrix Int
 startMatrix = matrix (width, height) (const 0)
 
-endMatrix :: [Instruction] -> Matrix Int
-endMatrix = foldl step startMatrix
+endMatrix :: OpFun -> [Instruction] -> Matrix Int
+endMatrix opFun = foldl (step opFun) startMatrix
 
 contains :: Range -> (Int, Int) -> Bool
 contains (Range start end) p = let
@@ -28,14 +34,16 @@ contains (Range start end) p = let
     mxp <= max x1 x2 && mxp >= min x1 x2 &&
     myp <= max y1 y2 && myp >= min y1 y2
 
-step :: Matrix Int -> Instruction -> Matrix Int
-step z i = mapWithIndex (apply i) z
-
--- apply the instruction on a single item in the matrix
-apply :: Instruction -> (Int, Int) -> Int -> Int
-apply (Instruction On r) p x = applyIfInRange r p (const 1) x
-apply (Instruction Off r) p x = applyIfInRange r p (const 0) x
-apply (Instruction Toggle r) p x = applyIfInRange r p (\v -> abs (v-1)) x
+step :: OpFun -> Matrix Int -> Instruction -> Matrix Int
+step opFun z i = mapWithIndex apply z
+  where
+    Instruction op r = i
+    apply p = applyIfInRange r p (opFun op)
 
 applyIfInRange :: Range -> (Int, Int) -> (Int -> Int) -> Int -> Int
 applyIfInRange range point fun val = if range `contains` point then fun val else val
+
+opA :: OpFun
+opA On = const 1
+opA Off = const 0
+opA Toggle = \v -> abs (v-1) -- i.e. 0 becomes 1, 1 becomes 0

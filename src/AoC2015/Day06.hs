@@ -40,6 +40,6 @@ For example:
 After following the instructions, how many lights are lit?
 -}
 
-partA = Challenge $ runChallenge.parse
+partA = Challenge $ runChallengeA.parse
 
 partB = undefined
