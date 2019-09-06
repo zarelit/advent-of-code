@@ -1,5 +1,5 @@
 module AoC2015.Day06.Calculate (
-runChallengeA
+runChallengeA, runChallengeB
 ) where
 
 import AoC2015.Day06.Types
@@ -12,8 +12,8 @@ height = 1000
 runChallengeA :: [Instruction] -> Integer
 runChallengeA = runChallenge opA
 
--- runChallengeB :: [Instruction] -> Integer
--- runChallengeB = runChallenge lookupB
+runChallengeB :: [Instruction] -> Integer
+runChallengeB = runChallenge opB
 
 runChallenge :: OpFun -> [Instruction] -> Integer
 runChallenge opFun xs = (toInteger.Numeric.Matrix.sum) (endMatrix opFun xs)
@@ -47,3 +47,8 @@ opA :: OpFun
 opA On = const 1
 opA Off = const 0
 opA Toggle = \v -> abs (v-1) -- i.e. 0 becomes 1, 1 becomes 0
+
+opB :: OpFun
+opB On = (+ 1)
+opB Off = \v -> max 0 (v - 1)
+opB Toggle = (+ 2)
