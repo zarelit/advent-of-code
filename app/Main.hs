@@ -1,8 +1,9 @@
 module Main where
 
-import MyLib qualified (someFunc)
+import NotQuiteLisp (santaFloor)
+import Puzzle (runPuzzle)
 
 main :: IO ()
 main = do
-    putStrLn "Hello, Haskell!"
-    MyLib.someFunc
+    putStrLn "Advent of Code testbed"
+    runPuzzle santaFloor "test"
