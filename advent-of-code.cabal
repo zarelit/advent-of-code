@@ -62,7 +62,7 @@ library
     import:           warnings
 
     -- Modules exported by the library.
-    exposed-modules:  Puzzle
+    -- exposed-modules: 
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -118,6 +118,8 @@ executable advent-of-code
     -- Other library packages from which modules are imported.
     build-depends:
         base ^>=4.16.4.0,
+        containers,
+        filepath,
         advent-of-code,
         AoC2015
 
