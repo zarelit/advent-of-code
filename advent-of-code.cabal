@@ -137,7 +137,7 @@ test-suite advent-of-code-test
     default-language: GHC2021
 
     -- Modules included in this executable, other than Main.
-    -- other-modules:
+    other-modules: AoC2015Spec
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
@@ -154,4 +154,7 @@ test-suite advent-of-code-test
     -- Test dependencies.
     build-depends:
         base ^>=4.16.4.0,
-        advent-of-code
+        advent-of-code:AoC2015,
+        hspec >= 1.3
+
+    build-tool-depends: hspec-discover:hspec-discover == 2.*
