@@ -84,7 +84,8 @@ library AoC2015
     import:           warnings
 
     -- Modules exported by the library.
-    exposed-modules:  NotQuiteLisp
+    exposed-modules:  NotQuiteLisp,
+                      IWasToldThereWouldBeNoMath
 
     -- Modules included in this library but not exported.
     -- other-modules:

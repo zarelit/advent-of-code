@@ -1,6 +1,8 @@
 module AoC2015Spec (spec) where
 
+import IWasToldThereWouldBeNoMath qualified
 import NotQuiteLisp qualified
+
 import Test.Hspec
 
 spec :: Spec
@@ -23,16 +25,15 @@ spec =
                 test ")" `shouldBe` 1
                 test "()())" `shouldBe` 5
 
--- context "Day 02" $ do
---   let day = 2
---   it "Part A" $ do
---     let test = run (year, day, "A")
---     test "2x3x4" `shouldBe` 58
---     test "1x1x10" `shouldBe` 43
---   it "Part B" $ do
---     let test = run (year, day, "B")
---     test "2x3x4" `shouldBe` 34
---     test "1x1x10" `shouldBe` 14
+        context "Day 02" $ do
+            it "Part A" $ do
+                let test = IWasToldThereWouldBeNoMath.partA
+                test "2x3x4" `shouldBe` "58"
+                test "1x1x10" `shouldBe` "43"
+            it "Part B" $ do
+                let test = IWasToldThereWouldBeNoMath.partB
+                test "2x3x4" `shouldBe` "34"
+                test "1x1x10" `shouldBe` "14"
 
 -- context "Day 03" $ do
 --   let day = 3

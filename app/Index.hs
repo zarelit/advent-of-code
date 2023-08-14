@@ -1,6 +1,7 @@
 module Index where
 
 import Data.Map (Map, fromList, keys)
+import IWasToldThereWouldBeNoMath qualified
 import NotQuiteLisp qualified
 
 type Name = String
@@ -15,4 +16,6 @@ solved =
     fromList
         [ ("2015-12-01 a", ("2015-12-01", NotQuiteLisp.partA))
         , ("2015-12-01 b", ("2015-12-01", NotQuiteLisp.partB))
+        , ("2015-12-02 a", ("2015-12-02", IWasToldThereWouldBeNoMath.partA))
+        , ("2015-12-02 b", ("2015-12-02", IWasToldThereWouldBeNoMath.partB))
         ]
