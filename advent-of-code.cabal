@@ -62,7 +62,7 @@ library
     import:           warnings
 
     -- Modules exported by the library.
-    -- exposed-modules: 
+    exposed-modules: Common
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -85,7 +85,8 @@ library AoC2015
 
     -- Modules exported by the library.
     exposed-modules:  NotQuiteLisp,
-                      IWasToldThereWouldBeNoMath
+                      IWasToldThereWouldBeNoMath,
+                      PerfectlySphericalHousesInAVacuum
 
     -- Modules included in this library but not exported.
     -- other-modules:

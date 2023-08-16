@@ -3,7 +3,7 @@
 {-# HLINT ignore "Use <$>" #-}
 module IWasToldThereWouldBeNoMath where
 
-import Data.Char (isDigit, isSpace)
+import Common (optionalWhitespace, parse, unsignedNumber)
 import Data.List (sort)
 import Text.ParserCombinators.ReadP
 
@@ -24,28 +24,20 @@ data Present = Present Int Int Int deriving (Show)
 
 {- Parse input -}
 present :: ReadP Present
-present =
-    let
-        number = (read <$> many1 (satisfy isDigit))
-     in
-        do
-            w <- number
-            _ <- char 'x'
-            h <- number
-            _ <- char 'x'
-            l <- number
-            _ <- many (satisfy isSpace)
-            return $ Present w h l
+present = do
+    w <- unsignedNumber
+    _ <- char 'x'
+    h <- unsignedNumber
+    _ <- char 'x'
+    l <- unsignedNumber
+    _ <- optionalWhitespace
+    return $ Present w h l
 
 parser :: ReadP [Present]
 parser = do
     xs <- many1 present
     eof
     return xs
-
--- Consider AoC input well-formed, take first
-parse :: String -> [Present]
-parse = fst . head . readP_to_S parser
 
 {- Calculations -}
 paper :: Present -> Int
@@ -58,7 +50,7 @@ paper (Present w h l) =
 
 partA :: String -> String
 -- partA input = show $ head (readP_to_S parser input)
-partA = show . sum . fmap paper . parse
+partA = show . sum . fmap paper . parse parser
 
 -- --- Part Two ---
 
@@ -77,4 +69,4 @@ ribbon :: Present -> Int
 ribbon (Present w h l) = w * h * l + 2 * (sum . init . sort) [w, h, l]
 
 partB :: String -> String
-partB = show . sum . fmap ribbon . parse
+partB = show . sum . fmap ribbon . parse parser
