@@ -3,7 +3,7 @@
 {-# HLINT ignore "Use <$>" #-}
 module IWasToldThereWouldBeNoMath where
 
-import Common (optionalWhitespace, parse, unsignedNumber)
+import Common (optionalWhitespace, parse, toEof, unsignedNumber)
 import Data.List (sort)
 import Text.ParserCombinators.ReadP
 
@@ -34,10 +34,7 @@ present = do
     return $ Present w h l
 
 parser :: ReadP [Present]
-parser = do
-    xs <- many1 present
-    eof
-    return xs
+parser = toEof (many1 present)
 
 {- Calculations -}
 paper :: Present -> Int
