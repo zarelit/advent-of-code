@@ -3,6 +3,7 @@ module AoC2015Spec (spec) where
 import IWasToldThereWouldBeNoMath qualified
 import NotQuiteLisp qualified
 import PerfectlySphericalHousesInAVacuum qualified
+import TheIdealStockingStuffer qualified
 
 import Test.Hspec
 
@@ -48,12 +49,11 @@ spec =
                 test "^>v<" `shouldBe` "3"
                 test "^v^v^v^v^v" `shouldBe` "11"
 
--- context "Day 04" $ do
---   let day = 4
---   it "Part A" $ do
---     let test = run (year, day, "A")
---     test "abcdef" `shouldBe` 609043
---     test "pqrstuv" `shouldBe` 1048970
+        context "Day 04" $ do
+            it "Part A" $ do
+                let test = TheIdealStockingStuffer.partA
+                test "abcdef" `shouldBe` "609043"
+                test "pqrstuv" `shouldBe` "1048970"
 
 -- context "Day 05" $ do
 --   let day = 5

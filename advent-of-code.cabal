@@ -86,7 +86,8 @@ library AoC2015
     -- Modules exported by the library.
     exposed-modules:  NotQuiteLisp,
                       IWasToldThereWouldBeNoMath,
-                      PerfectlySphericalHousesInAVacuum
+                      PerfectlySphericalHousesInAVacuum,
+                      TheIdealStockingStuffer
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -96,7 +97,11 @@ library AoC2015
 
     -- Other library packages from which modules are imported.
     build-depends:    base ^>=4.16.4.0,
-                      advent-of-code
+                      advent-of-code,
+                      MissingH,
+                      cryptohash-md5,
+                      bytestring,
+                      base16-bytestring
 
     -- Directories containing source files.
     hs-source-dirs:   src/AoC2015

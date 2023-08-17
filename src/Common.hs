@@ -15,6 +15,7 @@ unsignedNumber = read <$> many1 (satisfy isDigit)
 optionalWhitespace :: ReadP String
 optionalWhitespace = many (satisfy isSpace)
 
+-- make parser eat all the input
 toEof :: ReadP a -> ReadP a
 toEof p = do
     x <- p

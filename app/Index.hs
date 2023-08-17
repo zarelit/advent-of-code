@@ -4,6 +4,7 @@ import Data.Map (Map, fromList, keys)
 import IWasToldThereWouldBeNoMath qualified
 import NotQuiteLisp qualified
 import PerfectlySphericalHousesInAVacuum qualified
+import TheIdealStockingStuffer qualified
 
 type Name = String
 type InputName = String
@@ -21,4 +22,6 @@ solved =
         , ("2015-12-02 b", ("2015-12-02", IWasToldThereWouldBeNoMath.partB))
         , ("2015-12-03 a", ("2015-12-03", PerfectlySphericalHousesInAVacuum.partA))
         , ("2015-12-03 b", ("2015-12-03", PerfectlySphericalHousesInAVacuum.partB))
+        , ("2015-12-04 a", ("2015-12-04", TheIdealStockingStuffer.partA))
+        , ("2015-12-04 b", ("2015-12-04", TheIdealStockingStuffer.partB))
         ]
