@@ -1,5 +1,6 @@
 module AoC2015Spec (spec) where
 
+import DoesntHeHaveInternElvesForThis qualified
 import IWasToldThereWouldBeNoMath qualified
 import NotQuiteLisp qualified
 import PerfectlySphericalHousesInAVacuum qualified
@@ -55,21 +56,45 @@ spec =
                 test "abcdef" `shouldBe` "609043"
                 test "pqrstuv" `shouldBe` "1048970"
 
--- context "Day 05" $ do
---   let day = 5
---   it "Part A" $ do
---     let test = run (year, day, "A")
---     test "ugknbfddgicrmopn" `shouldBe` 1
---     test "aaa" `shouldBe` 1
---     test "jchzalrnumimnmhp" `shouldBe` 0
---     test "haegwjzuvuyypxyu" `shouldBe` 0
---     test "dvszwmarrgswjxmb" `shouldBe` 0
---   it "Part B" $ do
---     let test = run (year, day, "B")
---     test "qjhvhtzxzqqjkmpb" `shouldBe` 1
---     test "xxyxx" `shouldBe` 1
---     test "uurcxstgmygtbstg" `shouldBe` 0
---     test "ieodomkazucvgmuy" `shouldBe` 0
+        context "Day 05" $ do
+            it "Rule: Three Vowels" $ do
+                let test = DoesntHeHaveInternElvesForThis.threeVowels
+                test "aei" `shouldBe` True
+                test "xazegov" `shouldBe` True
+                test "aeiouaeiouaeiou" `shouldBe` True
+                test "ugknbfddgicrmopn" `shouldBe` True
+            it "Rule: Two in a row" $ do
+                let test = DoesntHeHaveInternElvesForThis.twiceInARow
+                test "xx" `shouldBe` True
+                test "abcdde" `shouldBe` True
+                test "aabbccdd" `shouldBe` True
+                test "ugknbfddgicrmopn" `shouldBe` True
+            it "Rule: No Naughty" $ do
+                let test = DoesntHeHaveInternElvesForThis.noBlocklisted
+                test "ugknbfddgicrmopn" `shouldBe` True
+            it "Rule: Repeated pair no overlap" $ do
+                let test = DoesntHeHaveInternElvesForThis.twicePairNoOverlap
+                test "xyxy" `shouldBe` True
+                test "aabcdefgaa" `shouldBe` True
+                test "aaa" `shouldBe` False
+            it "Rule: Repeated letter at distance one" $ do
+                let test = DoesntHeHaveInternElvesForThis.repeatedLetterAtDistanceOne
+                test "xyx" `shouldBe` True
+                test "abcdefeghi" `shouldBe` True
+                test "aaa" `shouldBe` True
+            it "Part A" $ do
+                let test = DoesntHeHaveInternElvesForThis.nice
+                test "ugknbfddgicrmopn" `shouldBe` True
+                test "aaa" `shouldBe` True
+                test "jchzalrnumimnmhp" `shouldBe` False
+                test "haegwjzuvuyypxyu" `shouldBe` False
+                test "dvszwmarrgswjxmb" `shouldBe` False
+            it "Part B" $ do
+                let test = DoesntHeHaveInternElvesForThis.betterNice
+                test "qjhvhtzxzqqjkmpb" `shouldBe` True
+                test "xxyxx" `shouldBe` True
+                test "uurcxstgmygtbstg" `shouldBe` False
+                test "ieodomkazucvgmuy" `shouldBe` False
 
 -- context "Day 06" $ do
 --   let day = 6

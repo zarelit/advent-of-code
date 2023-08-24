@@ -87,7 +87,8 @@ library AoC2015
     exposed-modules:  NotQuiteLisp,
                       IWasToldThereWouldBeNoMath,
                       PerfectlySphericalHousesInAVacuum,
-                      TheIdealStockingStuffer
+                      TheIdealStockingStuffer,
+                      DoesntHeHaveInternElvesForThis
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -101,7 +102,8 @@ library AoC2015
                       MissingH,
                       cryptohash-md5,
                       bytestring,
-                      base16-bytestring
+                      base16-bytestring,
+                      regex-pcre
 
     -- Directories containing source files.
     hs-source-dirs:   src/AoC2015

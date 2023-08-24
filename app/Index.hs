@@ -1,6 +1,7 @@
 module Index where
 
 import Data.Map (Map, fromList, keys)
+import DoesntHeHaveInternElvesForThis qualified
 import IWasToldThereWouldBeNoMath qualified
 import NotQuiteLisp qualified
 import PerfectlySphericalHousesInAVacuum qualified
@@ -24,4 +25,6 @@ solved =
         , ("2015-12-03 b", ("2015-12-03", PerfectlySphericalHousesInAVacuum.partB))
         , ("2015-12-04 a", ("2015-12-04", TheIdealStockingStuffer.partA))
         , ("2015-12-04 b", ("2015-12-04", TheIdealStockingStuffer.partB))
+        , ("2015-12-05 a", ("2015-12-05", DoesntHeHaveInternElvesForThis.partA))
+        , ("2015-12-05 b", ("2015-12-05", DoesntHeHaveInternElvesForThis.partB))
         ]
