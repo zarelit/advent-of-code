@@ -11,10 +11,6 @@ parse parser = fst . head . readP_to_S parser
 unsignedNumber :: Read a => ReadP a
 unsignedNumber = read <$> many1 (satisfy isDigit)
 
--- parse some whitespace
-optionalWhitespace :: ReadP String
-optionalWhitespace = many (satisfy isSpace)
-
 -- make parser eat all the input
 toEof :: ReadP a -> ReadP a
 toEof p = do

@@ -3,7 +3,7 @@
 {-# HLINT ignore "Use <$>" #-}
 module IWasToldThereWouldBeNoMath where
 
-import Common (optionalWhitespace, parse, toEof, unsignedNumber)
+import Common (parse, toEof, unsignedNumber)
 import Data.List (sort)
 import Text.ParserCombinators.ReadP
 
@@ -30,7 +30,7 @@ present = do
     h <- unsignedNumber
     _ <- char 'x'
     l <- unsignedNumber
-    _ <- optionalWhitespace
+    _ <- skipSpaces
     return $ Present w h l
 
 parser :: ReadP [Present]
