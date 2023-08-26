@@ -1,7 +1,7 @@
 module Common where
 
-import Data.Char (isDigit, isSpace)
-import Text.ParserCombinators.ReadP (ReadP, eof, many, many1, readP_to_S, satisfy)
+import Data.Char (isDigit)
+import Text.ParserCombinators.ReadP (ReadP, eof, many1, readP_to_S, satisfy)
 
 -- Consider AoC input well-formed, take first
 parse :: ReadP a -> String -> a
@@ -17,3 +17,7 @@ toEof p = do
     x <- p
     eof
     return x
+
+-- To use with parsers that completely cover the input
+parseToEof :: ReadP a -> String -> a
+parseToEof = parse . toEof

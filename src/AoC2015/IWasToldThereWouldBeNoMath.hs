@@ -3,7 +3,7 @@
 {-# HLINT ignore "Use <$>" #-}
 module IWasToldThereWouldBeNoMath where
 
-import Common (parse, toEof, unsignedNumber)
+import Common (parseToEof, unsignedNumber)
 import Data.List (sort)
 import Text.ParserCombinators.ReadP
 
@@ -34,7 +34,7 @@ present = do
     return $ Present w h l
 
 parser :: ReadP [Present]
-parser = toEof (many1 present)
+parser = many1 present
 
 {- Calculations -}
 paper :: Present -> Int
@@ -47,7 +47,7 @@ paper (Present w h l) =
 
 partA :: String -> String
 -- partA input = show $ head (readP_to_S parser input)
-partA = show . sum . fmap paper . parse parser
+partA = show . sum . fmap paper . parseToEof parser
 
 -- --- Part Two ---
 
@@ -66,4 +66,4 @@ ribbon :: Present -> Int
 ribbon (Present w h l) = w * h * l + 2 * (sum . init . sort) [w, h, l]
 
 partB :: String -> String
-partB = show . sum . fmap ribbon . parse parser
+partB = show . sum . fmap ribbon . parseToEof parser

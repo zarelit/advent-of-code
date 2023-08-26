@@ -1,6 +1,6 @@
 module PerfectlySphericalHousesInAVacuum where
 
-import Common (parse, toEof)
+import Common (parseToEof)
 import Data.Bifunctor (Bifunctor (bimap))
 import Data.List (nub)
 import Text.ParserCombinators.ReadP (ReadP, char, choice, many1)
@@ -31,7 +31,7 @@ instruction =
         ]
 
 instructionsForOne :: ReadP [Instruction]
-instructionsForOne = toEof (many1 instruction)
+instructionsForOne = many1 instruction
 
 -- Coord = (north, east)
 type Coord = (Int, Int)
@@ -52,7 +52,7 @@ visitedHouses :: [Coord] -> Int
 visitedHouses = length . nub
 
 partA :: String -> String
-partA = show . visitedHouses . path . parse instructionsForOne
+partA = show . visitedHouses . path . parseToEof instructionsForOne
 
 -- --- Part Two ---
 
@@ -79,4 +79,4 @@ instructionsForTwo = uninterleave <$> instructionsForOne
 
 partB :: String -> String
 partB =
-    show . visitedHouses . uncurry (++) . bimap path path . parse instructionsForTwo
+    show . visitedHouses . uncurry (++) . bimap path path . parseToEof instructionsForTwo
