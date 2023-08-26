@@ -4,6 +4,7 @@ import DoesntHeHaveInternElvesForThis qualified
 import IWasToldThereWouldBeNoMath qualified
 import NotQuiteLisp qualified
 import PerfectlySphericalHousesInAVacuum qualified
+import ProbablyAFireHazard qualified
 import TheIdealStockingStuffer qualified
 
 import Test.Hspec
@@ -96,17 +97,41 @@ spec =
                 test "uurcxstgmygtbstg" `shouldBe` False
                 test "ieodomkazucvgmuy" `shouldBe` False
 
--- context "Day 06" $ do
---   let day = 6
---   it "Part A" $ do
---     let test = run (year, day, "A")
---     test "turn on 0,0 through 999,999" `shouldBe` 1000000
---     test "toggle 0,0 through 999,0" `shouldBe` 1000
---     test (unlines [
---       "turn on 0,0 through 1,0",
---       "toggle 0,0 through 999,0"
---       ]) `shouldBe` 998
---     test (unlines [
---       "turn on 0,0 through 999,999",
---       "turn off 499,499 through 500,500"
---       ]) `shouldBe` 999996
+        context "Day 06" $ do
+            it "Part A" $ do
+                let test = ProbablyAFireHazard.partA
+                test "turn on 0,0 through 999,999" `shouldBe` "1000000"
+                test "toggle 0,0 through 999,0" `shouldBe` "1000"
+                test
+                    ( unlines
+                        [ "turn on 0,0 through 1,0"
+                        , "toggle 0,0 through 999,0"
+                        ]
+                    )
+                    `shouldBe` "998"
+                test
+                    ( unlines
+                        [ "turn on 0,0 through 999,999"
+                        , "turn off 499,499 through 500,500"
+                        ]
+                    )
+                    `shouldBe` "999996"
+            it "Part B" $ do
+                let test = ProbablyAFireHazard.partB
+                test "turn on 0,0 through 999,999" `shouldBe` "1000000"
+                test "toggle 0,0 through 999,0" `shouldBe` "2000"
+                test
+                    ( unlines
+                        [ "turn on 0,0 through 1,0"
+                        , "toggle 0,0 through 999,0"
+                        ]
+                    )
+                    `shouldBe` "2002"
+                test
+                    ( unlines
+                        [ "turn on 0,0 through 999,999"
+                        , "turn off 499,499 through 500,500"
+                        , "turn on 499,499 through 499,499"
+                        ]
+                    )
+                    `shouldBe` "999997"

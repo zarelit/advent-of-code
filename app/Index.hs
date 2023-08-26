@@ -5,6 +5,7 @@ import DoesntHeHaveInternElvesForThis qualified
 import IWasToldThereWouldBeNoMath qualified
 import NotQuiteLisp qualified
 import PerfectlySphericalHousesInAVacuum qualified
+import ProbablyAFireHazard qualified
 import TheIdealStockingStuffer qualified
 
 type Name = String
@@ -27,4 +28,6 @@ solved =
         , ("2015-12-04 b", ("2015-12-04", TheIdealStockingStuffer.partB))
         , ("2015-12-05 a", ("2015-12-05", DoesntHeHaveInternElvesForThis.partA))
         , ("2015-12-05 b", ("2015-12-05", DoesntHeHaveInternElvesForThis.partB))
+        , ("2015-12-06 a", ("2015-12-06", ProbablyAFireHazard.partA))
+        , ("2015-12-06 b", ("2015-12-06", ProbablyAFireHazard.partB))
         ]

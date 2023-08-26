@@ -88,7 +88,8 @@ library AoC2015
                       IWasToldThereWouldBeNoMath,
                       PerfectlySphericalHousesInAVacuum,
                       TheIdealStockingStuffer,
-                      DoesntHeHaveInternElvesForThis
+                      DoesntHeHaveInternElvesForThis,
+                      ProbablyAFireHazard
 
     -- Modules included in this library but not exported.
     -- other-modules:
