@@ -1,6 +1,6 @@
 module Common where
 
-import Data.Char (isDigit)
+import Data.Char (isAlpha, isDigit)
 import Text.ParserCombinators.ReadP (ReadP, eof, many1, readP_to_S, satisfy)
 
 -- Consider AoC input well-formed, take first
@@ -10,6 +10,9 @@ parse parser = fst . head . readP_to_S parser
 -- parse an unsigned number
 unsignedNumber :: Read a => ReadP a
 unsignedNumber = read <$> many1 (satisfy isDigit)
+
+identifier :: ReadP String
+identifier = many1 (satisfy isAlpha)
 
 -- make parser eat all the input
 toEof :: ReadP a -> ReadP a

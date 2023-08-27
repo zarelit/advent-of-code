@@ -135,3 +135,6 @@ spec =
                         ]
                     )
                     `shouldBe` "999997"
+        context "Day 07" $ do
+            it "Part A" $ do
+                let test = SomeAssemblyRequired.partA

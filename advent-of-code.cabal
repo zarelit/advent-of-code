@@ -89,7 +89,8 @@ library AoC2015
                       PerfectlySphericalHousesInAVacuum,
                       TheIdealStockingStuffer,
                       DoesntHeHaveInternElvesForThis,
-                      ProbablyAFireHazard
+                      ProbablyAFireHazard,
+                      SomeAssemblyRequired
 
     -- Modules included in this library but not exported.
     -- other-modules:
